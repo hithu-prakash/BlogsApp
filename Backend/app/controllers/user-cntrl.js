@@ -16,7 +16,16 @@ userCntrl.register= async(req,res)=> {
         //const user = await User.create(body)
         const salt = await bcryptjs.genSalt()
         const hashPassword = await bcryptjs.hash(body.password, salt)
-        const user = new User(body)
+        //console.log("hashPassword",hashPassword)
+        //const user = new User(body)
+        const user = new User({
+            username: body.username,
+            email: body.email,
+            password: hashPassword,
+            bio: body.bio,
+            profilePic: req.file ? req.file.filename : null // Set profilePic if file is uploaded
+        });
+        //const user=new User(body)
         user.password = hashPassword
         await user.save()
         res.status(201).json(user)
