@@ -2,6 +2,7 @@ require('dotenv').config()
 
 const configDB = require('./Backend/app/config/db')
 const { checkSchema } = require('express-validator')
+const upload = require('./Backend/app/middleware/multer')
 
 const express = require('express')
 const cors= require('cors')
@@ -34,38 +35,20 @@ configDB()
 app.use(express.json())
 app.use(cors())
 app.use(helmet())
+app.use(express.urlencoded({extended:false}))
+//app.use('/images',express.static(path.join(__dirname,'images')))
 
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms' /* 'common '*/, {
     stream: fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
   }))
 
-//Ensure the upload directory exists
-const uploadDir = path.join(__dirname, 'images');
-if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
-}
 
-// Static file serving
-app.use('/images', express.static(uploadDir));
-
-//Multer setup for file uploads
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, uploadDir);
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + path.extname(file.originalname));     }
- });
- const upload = multer({ storage: storage });
-
-
-// Static file serving
-app.use('/images', express.static(uploadDir));
 
 
 //user
-
 app.post('/user/register', upload.single('profilePic'),checkSchema(userRegisterValidation),userCntrl.register)
+app.post('/user/upload-profile-picture',authenticateUser,upload.single('profilePic'),userCntrl.uploadProfilePicture)
+
 app.post('/user/login',checkSchema(userLoginValidationSchema),userCntrl.login)
 app.get('/user/account',authenticateUser,userCntrl.account)
 app.put('/user/update',authenticateUser,checkSchema(userUpdateValidationSchema),userCntrl.update)

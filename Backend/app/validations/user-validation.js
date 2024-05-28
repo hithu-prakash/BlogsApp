@@ -128,20 +128,20 @@ const userUpdateValidationSchema={
         trim: true,
         normalizeEmail: true 
     },
-    password:{
-        in: ['body'],
-        exists:{
-            errorMessage:'password is required'
-        },
-        notEmpty:{
-            errorMessage:'password cannot be empty'
-        },
-        isLength: {
-            options: {min: 8, max: 128},
-            errorMessage: 'password should be between 8 - 128 characters'
-        },
-        trim: true 
-    },
+    // password:{
+    //     in: ['body'],
+    //     exists:{
+    //         errorMessage:'password is required'
+    //     },
+    //     notEmpty:{
+    //         errorMessage:'password cannot be empty'
+    //     },
+    //     isLength: {
+    //         options: {min: 8, max: 128},
+    //         errorMessage: 'password should be between 8 - 128 characters'
+    //     },
+    //     trim: true 
+    // },
     bio:{
         in: ['body'],
         exists:{

@@ -23,7 +23,7 @@ userCntrl.register= async(req,res)=> {
             email: body.email,
             password: hashPassword,
             bio: body.bio,
-            profilePic: req.file ? req.file.filename : null // Set profilePic if file is uploaded
+            profilePic: req.file.path // Set profilePic if file is uploaded
         });
         //const user=new User(body)
         user.password = hashPassword
@@ -107,6 +107,24 @@ userCntrl.delete=async(req,res)=>{
         res.status(500).json({ errors: 'Something went wrong' })
     }
 
+}
+
+userCntrl.uploadProfilePicture=async(req,res)=>{
+    try{
+        const userId=req.user.id
+        let profilePic=req.file.path
+
+        profilePic=profilePic.replace(/\\/g,"/")
+
+        const user=await User.findByIdAndUpdate(userId,{profilePic},{new:true})
+        if(!user){
+            return res.status(404).json({error:"user not found"})
+        }
+        res.status(200).json({message:"Profile picture updated successfully",user})
+        }
+    catch(e){
+        return res.json("internal error")
+    }
 }
 
 module.exports=userCntrl
