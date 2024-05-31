@@ -104,30 +104,30 @@ const userUpdateValidationSchema={
         },
         trim:true
     },
-    email:{
-        in: ['body'],
-        exists:{
-            errorMessage:'email is required'
-        },
-        notEmpty:{
-            errorMessage:'email cannot be empty'
-        },
-        isEmail:{
-            errorMessage:'Email cannot be empty'
-        },
-        custom: {
-            options: async function(value){
-                const user = await User.findOne({ email: value })
-                if(user) {
-                    throw new Error('email already taken')
-                } else {
-                    return true 
-                }
-            }
-        },
-        trim: true,
-        normalizeEmail: true 
-    },
+    // email:{
+    //     in: ['body'],
+    //     exists:{
+    //         errorMessage:'email is required'
+    //     },
+    //     notEmpty:{
+    //         errorMessage:'email cannot be empty'
+    //     },
+    //     isEmail:{
+    //         errorMessage:'Email cannot be empty'
+    //     },
+    //     custom: {
+    //         options: async function(value){
+    //             const user = await User.findOne({ email: value })
+    //             if(user) {
+    //                 throw new Error('email already taken')
+    //             } else {
+    //                 return true 
+    //             }
+    //         }
+    //     },
+    //     trim: true,
+    //     normalizeEmail: true 
+    // },
     // password:{
     //     in: ['body'],
     //     exists:{
