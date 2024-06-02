@@ -12,6 +12,7 @@ postCntrl.create=async(req,res)=>{
    try{
    const body=req.body
    const post=new Post(body)
+   //body.postImage = req.file.filename
    post.author=req.user.id
    await post.save()
    res.status(200).json(post)

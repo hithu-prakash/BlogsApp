@@ -13,9 +13,9 @@ const postSchema = new Schema ({
         type:Schema.Types.ObjectId,
         ref:'Comment'
     }],// not array of objects
-    tags:[
-        Schema.Types.ObjectId
-    ],
+    // tags:[
+    //     Schema.Types.ObjectId
+    // ],
     postImage:String
 },{timestamps:true})
 

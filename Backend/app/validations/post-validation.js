@@ -18,14 +18,14 @@ const postValidation={
         },
         trim:true,
     },
-    // img:{
-    //     exists:{
-    //         errorMessage:'img is required'
-    //     },
-    //     notEmpty:{
-    //         errorMessage:'img should not be empty'
-    //     },trim:true,
-    // }
+    img:{
+        exists:{
+            errorMessage:'img is required'
+        },
+        notEmpty:{
+            errorMessage:'img should not be empty'
+        },trim:true,
+    }
 }
 
 const postEditValidation={
